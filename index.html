@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Digital - Toucas Cirúrgicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 antialiased minimal-tabs pb-24">
+
+    <header class="bg-indigo-600 text-white text-center py-6 px-4 shadow-md">
+        <h1 class="text-2xl font-bold tracking-tight">Meu Catálogo de Toucas</h1>
+        <p class="text-sm text-indigo-100 mt-1">Escolha seu modelo, estampa e personalize do seu jeito!</p>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-6">
+        
+        <section class="mb-8">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">1</span>
+                Selecione o Modelo da Touca
+            </h2>
+            <div id="container-produtos" class="grid grid-cols-2 gap-3">
+                <p class="text-sm text-gray-500 col-span-2">Carregando modelos...</p>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                Selecione a Estampa / Desenho
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-indigo-300 transition">
+                    <input type="radio" name="opcao_estampa" value="PROPRIA" id="radio-logo-propria" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="selecionarOpcaoEstampa()">
+                    <div>
+                        <p class="font-medium text-sm text-gray-800">Quero enviar minha própria Logomarca</p>
+                        <p class="text-xs text-gray-500">O envio da imagem será feito direto no WhatsApp para orçamento.</p>
+                    </div>
+                </label>
+            </div>
+
+            <div class="mb-2 flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <span>Ou escolha um desenho pré-definido:</span>
+            </div>
+
+            <div id="container-estampas" class="grid grid-cols-2 gap-3">
+                <p class="text-sm text-gray-500 col-span-2">Carregando estampas...</p>
+            </div>
+        </section>
+
+        <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                Personalização & Detalhes
+            </h2>
+
+            <div class="mb-4">
+                <label class="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                    <input type="checkbox" id="chk-nome" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onchange="toggleCampoNome()">
+                    Deseja bordar seu nome na touca?
+                </label>
+                <input type="text" id="txt-nome-bordado" placeholder="Ex: Dr. João Vitor" class="hidden w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            </div>
+
+            <div class="mb-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Seu Nome completo:</label>
+                <input type="text" id="txt-nome-cliente" placeholder="Digite seu nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            </div>
+        </section>
+
+    </main>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg max-w-md mx-auto z-50">
+        <button onclick="enviarPedido()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.411 0 11.989 0c3.183.001 6.177 1.243 8.432 3.498 2.256 2.255 3.497 5.251 3.497 8.435 0 6.571-5.351 11.918-11.929 11.918-2.005-.001-3.975-.507-5.732-1.474L0 24zm6.59-4.846c1.657.983 3.411 1.502 5.333 1.503 5.395 0 9.781-4.385 9.784-9.778.001-2.612-1.015-5.068-2.862-6.918-1.848-1.85-4.305-2.867-6.923-2.867-5.399 0-9.786 4.386-9.79 9.779-.001 1.996.522 3.945 1.517 5.672l-.992 3.621 3.709-.972z"/></svg>
+            Enviar Pedido via WhatsApp
+        </button>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES - COLE SEUS LINKS CSV DO GOOGLE SHEETS AQUI
+        const URL_PRODUTOS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=0&single=true&output=csv";
+        const URL_ESTAMPAS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=373604360&single=true&output=csv";
+        
+        // Coloque seu número do WhatsApp comercial aqui (Formato: CódigoPaís + DDD + Número)
+        const SEU_NUMERO_WHATSAPP = "5515988143250"; 
+
+        let listaProdutos = [];
+        let listaEstampas = [];
+        
+        let produtoSelecionado = null;
+        let estampaSelecionada = null;
+
+        // Função para converter o texto CSV da planilha em objetos utilizáveis
+        function csvParaObjeto(textoCsv) {
+            const linhas = textoCsv.split("\n");
+            const cabecalho = linhas[0].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
+            const resultado = [];
+
+            for (let i = 1; i < linhas.length; i++) {
+                if (!linhas[i].trim()) continue;
+                
+                // Trata possíveis quebras de linha ou caracteres ocultos do CSV
+                const colunas = linhas[i].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
+                const obj = {};
+                
+                cabecalho.forEach((campo, index) => {
+                    obj[campo] = colunas[index] || "";
+                });
+                
+                resultado.push(obj);
+            }
+            return resultado;
+        }
+
+        // Carrega as informações direto do Google Sheets
+        async function carregarDados() {
+            try {
+                const resProdutos = await fetch(URL_PRODUTOS_CSV);
+                const textoProd = await resProdutos.text();
+                listaProdutos = csvParaObjeto(textoProd);
+
+                const resEstampas = await fetch(URL_ESTAMPAS_CSV);
+                const textoEst = await resEstampas.text();
+                listaEstampas = csvParaObjeto(textoEst);
+
+                renderizarProdutos();
+                renderizarEstampas();
+            } catch (erro) {
+                console.error("Erro ao sincronizar com o Google Sheets:", erro);
+            }
+        }
+
+        // Renderiza as Toucas na Tela
+        function renderizarProdutos() {
+            const container = document.getElementById("container-produtos");
+            container.innerHTML = "";
+
+            // Filtra apenas produtos com Disponivel = SIM
+            const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.toUpperCase() === "SIM");
+
+            ativos.forEach(prod => {
+                const card = document.createElement("div");
+                card.id = `prod-${prod.ID}`;
+                card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition flex flex-col justify-between";
+                card.onclick = () => selecionarProduto(prod);
+
+                card.innerHTML = `
+                    <img src="${prod.ImagemURL}" alt="${prod.Nome}" class="w-full h-28 object-cover rounded-lg bg-gray-100 mb-2">
+                    <h3 class="font-semibold text-sm text-gray-800">${prod.Nome}</h3>
+                    <p class="text-xs text-gray-500 mt-1 flex-grow">${prod.Descricao || ''}</p>
+                    <p class="text-indigo-600 font-bold text-sm mt-2">R$ ${parseFloat(prod.Preco).toFixed(2)}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Renderiza as Estampas na Tela
+        function renderizarEstampas() {
+            const container = document.getElementById("container-estampas");
+            container.innerHTML = "";
+
+            const ativas = listaEstampas.filter(e => e.Disponivel && e.Disponivel.toUpperCase() === "SIM");
+
+            ativas.forEach(est => {
+                const card = document.createElement("div");
+                card.id = `est-${est.Codigo}`;
+                card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition";
+                card.onclick = () => selecionarEstampa(est);
+
+                card.innerHTML = `
+                    <img src="${est['Imagem URL'] || est.ImagemURL}" alt="${est['Nome Estampa']}" class="w-full h-24 object-cover rounded-lg bg-gray-100 mb-2">
+                    <h3 class="font-medium text-xs text-gray-800">${est['Nome Estampa']}</h3>
+                    <span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full mt-1">${est.Categoria}</span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selecionarProduto(prod) {
+            produtoSelecionado = prod;
+            // Limpa seleções anteriores visuais
+            listaProdutos.forEach(p => {
+                const el = document.getElementById(`prod-${p.ID}`);
+                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+            });
+            // Destaca o selecionado
+            document.getElementById(`prod-${prod.ID}`).classList.add("border-indigo-600", "ring-2", "ring-indigo-100");
+        }
+
+        function selecionarEstampa(est) {
+            estampaSelecionada = est;
+            // Desmarca o rádio de logo própria
+            document.getElementById("radio-logo-propria").checked = false;
+            
+            listaEstampas.forEach(e => {
+                const el = document.getElementById(`est-${e.Codigo}`);
+                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+            });
+            document.getElementById(`est-${est.Codigo}`).classList.add("border-indigo-600", "ring-2", "ring-indigo-100");
+        }
+
+        function selecionarOpcaoEstampa() {
+            // Se escolheu enviar logo própria, remove o destaque das estampas do Sheets
+            estampaSelecionada = { Codigo: "PROPRIA", "Nome Estampa": "Logomarca Própria (Enviar via Chat)" };
+            listaEstampas.forEach(e => {
+                const el = document.getElementById(`est-${e.Codigo}`);
+                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+            });
+        }
+
+        function toggleCampoNome() {
+            const chk = document.getElementById("chk-nome");
+            const campo = document.getElementById("txt-nome-bordado");
+            campo.classList.toggle("hidden", !chk.checked);
+            if(chk.checked) campo.focus();
+        }
+
+        // Coleta tudo e dispara para o WhatsApp
+        function enviarPedido() {
+            const nomeCliente = document.getElementById("txt-nome-cliente").value.trim();
+            const querNomeBordado = document.getElementById("chk-nome").checked;
+            const nomeBordado = document.getElementById("txt-nome-bordado").value.trim();
+
+            if (!produtoSelecionado) {
+                alert("Por favor, selecione um modelo de touca.");
+                return;
+            }
+            if (!estampaSelecionada) {
+                alert("Por favor, selecione uma estampa ou marque a opção de Logo Própria.");
+                return;
+            }
+            if (!nomeCliente) {
+                alert("Por favor, digite seu nome para que saibamos quem está fazendo o pedido.");
+                return;
+            }
+            if (querNomeBordado && !nomeBordado) {
+                alert("Você marcaou que quer nome bordado, por favor digite o nome.");
+                return;
+            }
+
+            // Montagem do texto estruturado
+            let mensagem = `Olá! Gostaria de fazer um pedido de Touca:\n\n`;
+            mensagem += `👤 *Cliente:* ${nomeCliente}\n`;
+            mensagem += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco).toFixed(2)})\n`;
+            
+            if (estampaSelecionada.Codigo === "PROPRIA") {
+                mensagem += `🎨 *Estampa:* 📸 _[Vou enviar a imagem/logo em seguida para orçamento]_\n`;
+            } else {
+                mensagem += `🎨 *Estampa:* ${estampaSelecionada['Nome Estampa']} (Cód: ${estampaSelecionada.Codigo || estampaSelecionada.Codigo})\n`;
+            }
+
+            if (querNomeBordado) {
+                mensagem += `🪡 *Nome para Bordar:* Sim ("${nomeBordado}")\n`;
+            } else {
+                mensagem += `🪡 *Nome para Bordar:* Não\n`;
+            }
+
+            // Codificação para link web URL
+            const textoCodificado = encodeURIComponent(mensagem);
+            const linkFinal = `https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${textoCodificado}`;
+
+            // Redireciona o usuário abrindo o WhatsApp
+            window.open(linkFinal, '_blank');
+        }
+
+        // Inicia a sincronização ao carregar a página
+        window.onload = carregarDados;
+    </script>
+</body>
+</html>
