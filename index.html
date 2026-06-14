@@ -21,7 +21,7 @@
                 Selecione o Modelo da Touca
             </h2>
             <div id="container-produtos" class="grid grid-cols-2 gap-3">
-                <p class="text-sm text-gray-500 col-span-2">Carregando modelos...</p>
+                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Carregando modelos...</p>
             </div>
         </section>
 
@@ -46,7 +46,7 @@
             </div>
 
             <div id="container-estampas" class="grid grid-cols-2 gap-3">
-                <p class="text-sm text-gray-500 col-span-2">Carregando estampas...</p>
+                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Carregando estampas...</p>
             </div>
         </section>
 
@@ -80,11 +80,9 @@
     </div>
 
     <script>
-        // CONFIGURAÇÕES - COLE SEUS LINKS CSV DO GOOGLE SHEETS AQUI
         const URL_PRODUTOS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=0&single=true&output=csv";
         const URL_ESTAMPAS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=373604360&single=true&output=csv";
         
-        // Coloque seu número do WhatsApp comercial aqui (Formato: CódigoPaís + DDD + Número)
         const SEU_NUMERO_WHATSAPP = "5515988143250"; 
 
         let listaProdutos = [];
@@ -93,7 +91,7 @@
         let produtoSelecionado = null;
         let estampaSelecionada = null;
 
-        // Função para converter o texto CSV da planilha em objetos utilizáveis
+        // OTIMIZADA: Remove espaços extras e quebras de linha invisíveis (\r)
         function csvParaObjeto(textoCsv) {
             const linhas = textoCsv.split("\n");
             const cabecalho = linhas[0].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
@@ -102,7 +100,6 @@
             for (let i = 1; i < linhas.length; i++) {
                 if (!linhas[i].trim()) continue;
                 
-                // Trata possíveis quebras de linha ou caracteres ocultos do CSV
                 const colunas = linhas[i].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
                 const obj = {};
                 
@@ -115,7 +112,6 @@
             return resultado;
         }
 
-        // Carrega as informações direto do Google Sheets
         async function carregarDados() {
             try {
                 const resProdutos = await fetch(URL_PRODUTOS_CSV);
@@ -133,13 +129,17 @@
             }
         }
 
-        // Renderiza as Toucas na Tela
         function renderizarProdutos() {
             const container = document.getElementById("container-produtos");
             container.innerHTML = "";
 
-            // Filtra apenas produtos com Disponivel = SIM
-            const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.toUpperCase() === "SIM");
+            // Limpa espaços no filtro de Disponível
+            const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.trim().toUpperCase() === "SIM");
+
+            if(ativos.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhum modelo disponível no momento.</p>`;
+                return;
+            }
 
             ativos.forEach(prod => {
                 const card = document.createElement("div");
@@ -147,22 +147,29 @@
                 card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition flex flex-col justify-between";
                 card.onclick = () => selecionarProduto(prod);
 
+                // Garante a leitura da chave ImagemURL independente de pequenos espaços
+                const urlImagem = prod.ImagemURL || prod['Imagem URL'] || '';
+
                 card.innerHTML = `
-                    <img src="${prod.ImagemURL}" alt="${prod.Nome}" class="w-full h-28 object-cover rounded-lg bg-gray-100 mb-2">
+                    <img src="${urlImagem}" alt="${prod.Nome}" class="w-full h-28 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
                     <h3 class="font-semibold text-sm text-gray-800">${prod.Nome}</h3>
                     <p class="text-xs text-gray-500 mt-1 flex-grow">${prod.Descricao || ''}</p>
-                    <p class="text-indigo-600 font-bold text-sm mt-2">R$ ${parseFloat(prod.Preco).toFixed(2)}</p>
+                    <p class="text-indigo-600 font-bold text-sm mt-2">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // Renderiza as Estampas na Tela
         function renderizarEstampas() {
             const container = document.getElementById("container-estampas");
             container.innerHTML = "";
 
-            const ativas = listaEstampas.filter(e => e.Disponivel && e.Disponivel.toUpperCase() === "SIM");
+            const ativas = listaEstampas.filter(e => e.Disponivel && e.Disponivel.trim().toUpperCase() === "SIM");
+
+            if(ativas.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhuma estampa disponível.</p>`;
+                return;
+            }
 
             ativas.forEach(est => {
                 const card = document.createElement("div");
@@ -170,10 +177,13 @@
                 card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition";
                 card.onclick = () => selecionarEstampa(est);
 
+                const nomeEstampa = est['Nome Estampa'] || est.Nome || 'Estampa';
+                const urlImagem = est['Imagem URL'] || est.ImagemURL || '';
+
                 card.innerHTML = `
-                    <img src="${est['Imagem URL'] || est.ImagemURL}" alt="${est['Nome Estampa']}" class="w-full h-24 object-cover rounded-lg bg-gray-100 mb-2">
-                    <h3 class="font-medium text-xs text-gray-800">${est['Nome Estampa']}</h3>
-                    <span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full mt-1">${est.Categoria}</span>
+                    <img src="${urlImagem}" alt="${nomeEstampa}" class="w-full h-24 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
+                    <h3 class="font-medium text-xs text-gray-800">${nomeEstampa}</h3>
+                    <span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full mt-1">${est.Categoria || 'Geral'}</span>
                 `;
                 container.appendChild(card);
             });
@@ -181,18 +191,19 @@
 
         function selecionarProduto(prod) {
             produtoSelecionado = prod;
-            // Limpa seleções anteriores visuais
             listaProdutos.forEach(p => {
                 const el = document.getElementById(`prod-${p.ID}`);
                 if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
             });
-            // Destaca o selecionado
             document.getElementById(`prod-${prod.ID}`).classList.add("border-indigo-600", "ring-2", "ring-indigo-100");
         }
 
+        document.addEventListener("DOMContentLoaded", () => {
+             // O código roda após o DOM carregar
+        });
+
         function selecionarEstampa(est) {
             estampaSelecionada = est;
-            // Desmarca o rádio de logo própria
             document.getElementById("radio-logo-propria").checked = false;
             
             listaEstampas.forEach(e => {
@@ -203,7 +214,6 @@
         }
 
         function selecionarOpcaoEstampa() {
-            // Se escolheu enviar logo própria, remove o destaque das estampas do Sheets
             estampaSelecionada = { Codigo: "PROPRIA", "Nome Estampa": "Logomarca Própria (Enviar via Chat)" };
             listaEstampas.forEach(e => {
                 const el = document.getElementById(`est-${e.Codigo}`);
@@ -218,7 +228,6 @@
             if(chk.checked) campo.focus();
         }
 
-        // Coleta tudo e dispara para o WhatsApp
         function enviarPedido() {
             const nomeCliente = document.getElementById("txt-nome-cliente").value.trim();
             const querNomeBordado = document.getElementById("chk-nome").checked;
@@ -233,23 +242,23 @@
                 return;
             }
             if (!nomeCliente) {
-                alert("Por favor, digite seu nome para que saibamos quem está fazendo o pedido.");
+                alert("Por favor, digite seu nome.");
                 return;
             }
             if (querNomeBordado && !nomeBordado) {
-                alert("Você marcaou que quer nome bordado, por favor digite o nome.");
+                alert("Por favor, informe o nome para o bordado.");
                 return;
             }
 
-            // Montagem do texto estruturado
             let mensagem = `Olá! Gostaria de fazer um pedido de Touca:\n\n`;
             mensagem += `👤 *Cliente:* ${nomeCliente}\n`;
-            mensagem += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco).toFixed(2)})\n`;
+            mensagem += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco || 0).toFixed(2)})\n`;
             
             if (estampaSelecionada.Codigo === "PROPRIA") {
                 mensagem += `🎨 *Estampa:* 📸 _[Vou enviar a imagem/logo em seguida para orçamento]_\n`;
             } else {
-                mensagem += `🎨 *Estampa:* ${estampaSelecionada['Nome Estampa']} (Cód: ${estampaSelecionada.Codigo || estampaSelecionada.Codigo})\n`;
+                const nomeEst = estampaSelecionada['Nome Estampa'] || estampaSelecionada.Nome || 'Estampa';
+                mensagem += `🎨 *Estampa:* ${nomeEst} (Cód: ${estampaSelecionada.Codigo})\n`;
             }
 
             if (querNomeBordado) {
@@ -258,15 +267,12 @@
                 mensagem += `🪡 *Nome para Bordar:* Não\n`;
             }
 
-            // Codificação para link web URL
             const textoCodificado = encodeURIComponent(mensagem);
             const linkFinal = `https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${textoCodificado}`;
 
-            // Redireciona o usuário abrindo o WhatsApp
             window.open(linkFinal, '_blank');
         }
 
-        // Inicia a sincronização ao carregar a página
         window.onload = carregarDados;
     </script>
 </body>
