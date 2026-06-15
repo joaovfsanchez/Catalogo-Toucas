@@ -28,9 +28,14 @@
         </div>
     </div>
 
-    <header class="bg-black text-white text-center py-6 px-4 shadow-md flex flex-col items-center justify-center border-b border-gray-900">
-        <img src="Leondas.jpg" alt="Leondas" class="w-32 h-32 object-contain mb-2">
-        <p class="text-xs text-gray-400 tracking-wide uppercase">Escolha seu modelo, estampa e personalize do seu jeito!</p>
+    <header class="bg-black text-white text-center py-8 px-4 shadow-md flex flex-col items-center justify-center border-b border-gray-900">
+        <img src="Leondas.jpg" alt="Leondas Logo" class="w-32 h-32 object-contain mb-4">
+        
+        <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Catálogo Digital Leondas</h1>
+        
+        <p class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">
+            Escolha seu modelo, estampa e personalize do seu jeito!
+        </p>
     </header>
 
     <main class="max-w-md mx-auto px-4 mt-6">
@@ -41,7 +46,7 @@
                 Selecione o Modelo da Touca
             </h2>
             <div id="container-produtos" class="grid grid-cols-1 gap-2">
-                <p class="text-sm text-gray-500 text-center py-4">Buscando modelos...</p>
+                <p class="text-sm text-gray-500 text-center py-4 tracking-wide animate-pulse">Buscando modelos...</p>
             </div>
         </section>
 
@@ -51,7 +56,7 @@
                 Escolha a cor do tecido
             </h2>
             <div class="mt-2">
-                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Digite a cor desejada:</label>
+                <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider">Digite a cor desejada:</label>
                 <input type="text" id="txt-cor-touca" placeholder="Ex: Azul Marinho, Verde, Rosa..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
         </section>
@@ -63,21 +68,23 @@
             </h2>
             
             <div class="mb-4">
-                <label class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-gray-400 transition">
+                <label class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-gray-400 transition" id="card-logo-propria">
                     <input type="radio" name="opcao_estampa" value="PROPRIA" id="radio-logo-propria" class="w-4 h-4 text-black focus:ring-black" onchange="selecionarOpcaoEstampa()">
                     <div>
                         <p class="font-medium text-sm text-gray-800">Quero enviar minha própria Logomarca</p>
-                        <p class="text-xs text-gray-500">O envio da imagem será feito direto no WhatsApp para orçamento.</p>
+                        <p class="text-[10px] text-gray-500">O envio da imagem será feito direto no WhatsApp para orçamento.</p>
                     </div>
                 </label>
             </div>
 
-            <div class="mb-2 flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                <span>Ou escolha um desenho pré-definido:</span>
+            <div class="mb-2 flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <hr class="flex-1 border-gray-200">
+                <span>Ou escolha um desenho</span>
+                <hr class="flex-1 border-gray-200">
             </div>
 
             <div id="container-estampas" class="grid grid-cols-2 gap-3">
-                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Buscando estampas...</p>
+                <p class="text-sm text-gray-500 col-span-2 text-center py-4 tracking-wide animate-pulse">Buscando estampas...</p>
             </div>
         </section>
 
@@ -88,7 +95,7 @@
             </h2>
 
             <div class="mb-4">
-                <label class="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                <label class="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 cursor-pointer">
                     <input type="checkbox" id="chk-nome" class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black" onchange="toggleCampoNome()">
                     Deseja bordar seu nome na touca?
                 </label>
@@ -96,15 +103,15 @@
             </div>
 
             <div class="mb-2">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Seu Nome completo:</label>
-                <input type="text" id="txt-nome-cliente" placeholder="Digite seu nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider">Seu Nome completo:</label>
+                <input type="text" id="txt-nome-cliente" placeholder="Como podemos te chamar?" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
         </section>
 
     </main>
 
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg max-w-md mx-auto z-50">
-        <button onclick="enviarPedido()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2">
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-200 p-4 shadow-lg max-w-md mx-auto z-50">
+        <button onclick="enviarPedido()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.411 0 11.989 0c3.183.001 6.177 1.243 8.432 3.498 2.256 2.255 3.497 5.251 3.497 8.435 0 6.571-5.351 11.918-11.929 11.918-2.005-.001-3.975-.507-5.732-1.474L0 24zm6.59-4.846c1.657.983 3.411 1.502 5.333 1.503 5.395 0 9.781-4.385 9.784-9.778.001-2.612-1.015-5.068-2.862-6.918-1.848-1.85-4.305-2.867-6.923-2.867-5.399 0-9.786 4.386-9.79 9.779-.001 1.996.522 3.945 1.517 5.672l-.992 3.621 3.709-.972z"/></svg>
             Enviar Pedido via WhatsApp
         </button>
@@ -134,14 +141,11 @@
             const linhas = textoCsv.split("\n");
             const cabecalho = linhas[0].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
             const resultado = [];
-
             for (let i = 1; i < linhas.length; i++) {
                 if (!linhas[i].trim()) continue;
                 const colunas = linhas[i].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
                 const obj = {};
-                cabecalho.forEach((campo, index) => {
-                    obj[campo] = colunas[index] || "";
-                });
+                cabecalho.forEach((campo, index) => { obj[campo] = colunas[index] || ""; });
                 resultado.push(obj);
             }
             return resultado;
@@ -149,18 +153,14 @@
 
         async function carregarDados() {
             try {
-                const resProdutos = await fetch(URL_PRODUTOS_CSV);
-                listaProdutos = csvParaObjeto(await resProdutos.text());
-
-                const resEstampas = await fetch(URL_ESTAMPAS_CSV);
-                listaEstampas = csvParaObjeto(await resEstampas.text());
-
+                const [resP, resE] = await Promise.all([fetch(URL_PRODUTOS_CSV), fetch(URL_ESTAMPAS_CSV)]);
+                listaProdutos = csvParaObjeto(await resP.text());
+                listaEstampas = csvParaObjeto(await resE.text());
                 renderizarProdutos();
                 renderizarEstampas();
             } catch (erro) {
                 console.error("Erro ao sincronizar dados:", erro);
             } finally {
-                // Remove o Splash Screen da tela de forma suave após o carregamento
                 const splash = document.getElementById("splash-screen");
                 if (splash) {
                     splash.classList.add("opacity-0");
@@ -173,24 +173,17 @@
             const container = document.getElementById("container-produtos");
             container.innerHTML = "";
             const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.trim().toUpperCase() === "SIM");
-
-            if(ativos.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 text-center">Nenhum modelo disponível no momento.</p>`;
-                return;
-            }
-
             ativos.forEach(prod => {
                 const card = document.createElement("div");
                 card.id = `prod-${prod.ID}`;
-                card.className = "bg-white border border-gray-200 rounded-xl p-3.5 cursor-pointer shadow-sm hover:border-black transition flex justify-between items-center";
+                card.className = "bg-white border border-gray-200 rounded-xl p-4 cursor-pointer shadow-sm hover:border-black transition flex justify-between items-center";
                 card.onclick = () => selecionarProduto(prod);
-
                 card.innerHTML = `
                     <div class="text-left">
-                        <h3 class="font-semibold text-sm text-gray-900">${prod.Nome}</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">${prod.Descricao || ''}</p>
+                        <h3 class="font-bold text-sm text-gray-900">${prod.Nome}</h3>
+                        <p class="text-[10px] text-gray-500 mt-0.5">${prod.Descricao || ''}</p>
                     </div>
-                    <p class="text-black font-bold text-sm ml-4 whitespace-nowrap">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
+                    <p class="text-black font-black text-sm ml-4 whitespace-nowrap">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
                 `;
                 container.appendChild(card);
             });
@@ -200,25 +193,17 @@
             const container = document.getElementById("container-estampas");
             container.innerHTML = "";
             const ativas = listaEstampas.filter(e => e.Disponivel && e.Disponivel.trim().toUpperCase() === "SIM");
-
-            if(ativas.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhuma estampa disponível.</p>`;
-                return;
-            }
-
             ativas.forEach(est => {
                 const card = document.createElement("div");
                 card.id = `est-${est.Codigo}`;
                 card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-black transition";
                 card.onclick = () => selecionarEstampa(est);
-
                 const nomeEstampa = est['Nome Estampa'] || est.Nome || 'Estampa';
                 const urlImagem = corrigirLinkImagem(est['Imagem URL'] || est.ImagemURL || '');
-
                 card.innerHTML = `
-                    <img src="${urlImagem}" alt="${nomeEstampa}" class="w-full h-24 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
-                    <h3 class="font-medium text-xs text-gray-800">${nomeEstampa}</h3>
-                    <span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full mt-1">${est.Categoria || 'Geral'}</span>
+                    <img src="${urlImagem}" alt="${nomeEstampa}" class="w-full h-24 object-cover rounded-lg bg-gray-50 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
+                    <h3 class="font-bold text-[11px] text-gray-800 leading-tight h-6 flex items-center justify-center">${nomeEstampa}</h3>
+                    <span class="inline-block bg-gray-100 text-gray-500 text-[9px] px-2 py-0.5 rounded-full mt-1 uppercase font-bold tracking-tighter">${est.Categoria || 'Geral'}</span>
                 `;
                 container.appendChild(card);
             });
@@ -226,72 +211,56 @@
 
         function selecionarProduto(prod) {
             produtoSelecionado = prod;
-            listaProdutos.forEach(p => {
-                const el = document.getElementById(`prod-${p.ID}`);
-                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
-            });
-            document.getElementById(`prod-${prod.ID}`).className += " border-black ring-2 ring-gray-200";
+            document.querySelectorAll("#container-produtos > div").forEach(el => el.classList.remove("border-black", "ring-2", "ring-gray-200", "bg-gray-50"));
+            document.getElementById(`prod-${prod.ID}`).classList.add("border-black", "ring-2", "ring-gray-200", "bg-gray-50");
         }
 
         function selecionarEstampa(est) {
             estampaSelecionada = est;
             document.getElementById("radio-logo-propria").checked = false;
-            listaEstampas.forEach(e => {
-                const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
-            });
-            document.getElementById(`est-${est.Codigo}`).className += " border-black ring-2 ring-gray-200";
+            document.getElementById("card-logo-propria").classList.remove("border-black", "ring-2", "ring-gray-200", "bg-gray-50");
+            document.querySelectorAll("#container-estampas > div").forEach(el => el.classList.remove("border-black", "ring-2", "ring-gray-200", "bg-gray-50"));
+            document.getElementById(`est-${est.Codigo}`).classList.add("border-black", "ring-2", "ring-gray-200", "bg-gray-50");
         }
 
         function selecionarOpcaoEstampa() {
             estampaSelecionada = { Codigo: "PROPRIA", "Nome Estampa": "Logomarca Própria (Enviar via Chat)" };
-            listaEstampas.forEach(e => {
-                const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
-            });
+            document.querySelectorAll("#container-estampas > div").forEach(el => el.classList.remove("border-black", "ring-2", "ring-gray-200", "bg-gray-50"));
+            document.getElementById("card-logo-propria").classList.add("border-black", "ring-2", "ring-gray-200", "bg-gray-50");
         }
 
         function toggleCampoNome() {
-            const chk = document.getElementById("chk-nome");
             const campo = document.getElementById("txt-nome-bordado");
-            campo.classList.toggle("hidden", !chk.checked);
-            if(chk.checked) campo.focus();
+            campo.classList.toggle("hidden", !document.getElementById("chk-nome").checked);
         }
 
         function enviarPedido() {
-            const nomeCliente = document.getElementById("txt-nome-cliente").value.trim();
-            const corTouca = document.getElementById("txt-cor-touca").value.trim();
-            const querNomeBordado = document.getElementById("chk-nome").checked;
-            const nomeBordado = document.getElementById("txt-nome-bordado").value.trim();
+            const cliente = document.getElementById("txt-nome-cliente").value.trim();
+            const cor = document.getElementById("txt-cor-touca").value.trim();
+            const bordadoNome = document.getElementById("txt-nome-bordado").value.trim();
 
-            if (!produtoSelecionado) { alert("Por favor, selecione um modelo de touca."); return; }
-            if (!corTouca) { alert("Por favor, digite a cor desejada para o tecido."); return; }
-            if (!estampaSelecionada) { alert("Por favor, selecione uma estampa ou marque a opção de Logo Própria."); return; }
-            if (!nomeCliente) { alert("Por favor, digite seu nome."); return; }
-            if (querNomeBordado && !nomeBordado) { alert("Por favor, informe o nome para o bordado."); return; }
+            if (!produtoSelecionado || !cor || !estampaSelecionada || !cliente) {
+                alert("Por favor, preencha Modelo, Cor, Estampa e seu Nome!");
+                return;
+            }
 
-            let mensagem = `Olá! Gostaria de fazer um pedido de Touca:\n\n`;
-            mensagem += `👤 *Cliente:* ${nomeCliente}\n`;
-            mensagem += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco || 0).toFixed(2)})\n`;
-            mensagem += `🎨 *Cor do Tecido:* ${corTouca}\n`;
+            let msg = `Olá! Gostaria de fazer um pedido de Touca:\n\n`;
+            msg += `👤 *Cliente:* ${cliente}\n`;
+            msg += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco || 0).toFixed(2)})\n`;
+            msg += `🎨 *Cor do Tecido:* ${cor}\n`;
             
             if (estampaSelecionada.Codigo === "PROPRIA") {
-                mensagem += `🎨 *Estampa:* 📸 _[Vou enviar a imagem/logo em seguida para orçamento]_\n`;
+                msg += `🎨 *Estampa:* 📸 _[Vou enviar a imagem em seguida]_\n`;
             } else {
-                const nomeEst = estampaSelecionada['Nome Estampa'] || estampaSelecionada.Nome || 'Estampa';
-                mensagem += `🎨 *Estampa:* ${nomeEst} (Cód: ${estampaSelecionada.Codigo})\n`;
+                const nE = estampaSelecionada['Nome Estampa'] || estampaSelecionada.Nome;
+                msg += `🎨 *Estampa:* ${nE} (Cód: ${estampaSelecionada.Codigo})\n`;
             }
 
-            if (querNomeBordado) {
-                mensagem += `🪡 *Nome para Bordar:* Sim ("${nomeBordado}")\n`;
-            } else {
-                mensagem += `🪡 *Nome para Bordar:* Não\n`;
+            if (document.getElementById("chk-nome").checked) {
+                msg += `🪡 *Bordar Nome:* Sim ("${bordadoNome}")\n`;
             }
 
-            const textoCodificado = encodeURIComponent(mensagem);
-            const linkFinal = `https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${textoCodificado}`;
-
-            window.open(linkFinal, '_blank');
+            window.open(`https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         window.onload = carregarDados;
