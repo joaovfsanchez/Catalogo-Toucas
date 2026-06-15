@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Digital Leondas</title>
+    
+    <!-- CONFIGURAÇÃO PARA APARECER NO COMPARTILHAMENTO DO WHATSAPP -->
+    <title>Catálogo Digital - Leondas</title>
+    <meta name="description" content="Escolha seu modelo, estampa e personalize sua touca profissional do seu jeito! Conforto, estilo e qualidade.">
+    
+    <!-- Tags Open Graph (OG) que o WhatsApp lê -->
+    <meta property="og:title" content="Catálogo Digital Leondas">
+    <meta property="og:description" content="Toucas Profissionais: Escolha seu modelo, estampa e personalize do seu jeito! Conforto e estilo para quem cuida.">
+    <meta property="og:image" content="Catalogo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Animação de pulsação suave para a logo no Splash Screen */
@@ -18,9 +31,10 @@
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased minimal-tabs pb-24">
 
+    <!-- SPLASH SCREEN -->
     <div id="splash-screen" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="text-center px-6">
-            <img src="Leondas.jpg" alt="Leondas Logo" class="w-48 h-48 object-contain mx-auto animate-pulse-custom" onerror="this.style.display='none'">
+            <img src="Leondas.jpg" alt="Leondas Logo" class="w-64 h-24 object-contain mx-auto animate-pulse-custom" onerror="this.style.display='none'">
             <div class="mt-4 flex items-center justify-center gap-2">
                 <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
                 <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Carregando Catálogo...</p>
@@ -28,18 +42,36 @@
         </div>
     </div>
 
-    <header class="bg-black text-white text-center py-8 px-4 shadow-md flex flex-col items-center justify-center border-b border-gray-900">
-        <img src="Leondas.jpg" alt="Leondas Logo" class="w-64 h-24 object-contain mb-4">
-        
+    <!-- TOPO DA PÁGINA (Ajustado para tamanho retangular) -->
+    <header class="bg-black text-white text-center py-6 px-4 shadow-md flex flex-col items-center justify-center border-b border-gray-900">
+        <img src="Leondas.jpg" alt="Leondas Logo" class="w-48 h-16 object-contain mb-2">
         <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Catálogo Digital Leondas</h1>
-        
         <p class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">
             Escolha seu modelo, estampa e personalize do seu jeito!
         </p>
     </header>
 
     <main class="max-w-md mx-auto px-4 mt-6">
+
+        <!-- BANNER DE CONDIÇÕES DE PAGAMENTO (NOVO) -->
+        <section class="mb-6 bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-center">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center justify-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                Forma de Pagamento
+            </h3>
+            <div class="grid grid-cols-2 divide-x divide-gray-100 bg-gray-50 rounded-lg py-2.5">
+                <div class="text-center">
+                    <p class="text-lg font-black text-gray-900">50%</p>
+                    <p class="text-[11px] font-medium text-gray-500">no Pedido</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-lg font-black text-gray-900">50%</p>
+                    <p class="text-[11px] font-medium text-gray-500">na Entrega</p>
+                </div>
+            </div>
+        </section>
         
+        <!-- PASSO 1: SELECIONE O MODELO DA TOUCA -->
         <section class="mb-8">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">1</span>
@@ -50,6 +82,7 @@
             </div>
         </section>
 
+        <!-- PASSO 2: ESCOLHA A COR DO TECIDO -->
         <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
@@ -61,6 +94,7 @@
             </div>
         </section>
 
+        <!-- PASSO 3: SELECIONE A ESTAMPA / DESENHO -->
         <section class="mb-8">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
@@ -88,6 +122,7 @@
             </div>
         </section>
 
+        <!-- PASSO 4: PERSONALIZAÇÃO & DETALHES -->
         <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
                 <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">4</span>
@@ -110,6 +145,7 @@
 
     </main>
 
+    <!-- BOTÃO FIXO ENVIAR -->
     <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-200 p-4 shadow-lg max-w-md mx-auto z-50">
         <button onclick="enviarPedido()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.411 0 11.989 0c3.183.001 6.177 1.243 8.432 3.498 2.256 2.255 3.497 5.251 3.497 8.435 0 6.571-5.351 11.918-11.929 11.918-2.005-.001-3.975-.507-5.732-1.474L0 24zm6.59-4.846c1.657.983 3.411 1.502 5.333 1.503 5.395 0 9.781-4.385 9.784-9.778.001-2.612-1.015-5.068-2.862-6.918-1.848-1.85-4.305-2.867-6.923-2.867-5.399 0-9.786 4.386-9.79 9.779-.001 1.996.522 3.945 1.517 5.672l-.992 3.621 3.709-.972z"/></svg>
