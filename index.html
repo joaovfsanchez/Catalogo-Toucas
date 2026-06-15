@@ -20,8 +20,8 @@
                 <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">1</span>
                 Selecione o Modelo da Touca
             </h2>
-            <div id="container-produtos" class="grid grid-cols-2 gap-3">
-                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Carregando modelos...</p>
+            <div id="container-produtos" class="grid grid-cols-1 gap-2">
+                <p class="text-sm text-gray-500 text-center py-4">Carregando modelos...</p>
             </div>
         </section>
 
@@ -102,7 +102,7 @@
         let produtoSelecionado = null;
         let estampaSelecionada = null;
 
-        // Converte links normais do GitHub em RAW de forma automática para os Modelos e Estampas
+        // Converte links normais do GitHub em RAW de forma automática para as Estampas
         function corrigirLinkImagem(url) {
             if (!url) return "";
             if (url.includes("github.com") && url.includes("/blob/")) {
@@ -149,23 +149,23 @@
             const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.trim().toUpperCase() === "SIM");
 
             if(ativos.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhum modelo disponível.</p>`;
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center">Nenhum modelo disponível.</p>`;
                 return;
             }
 
             ativos.forEach(prod => {
                 const card = document.createElement("div");
                 card.id = `prod-${prod.ID}`;
-                card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition flex flex-col justify-between";
+                // Layout em formato de lista larga (estilo botão de texto)
+                card.className = "bg-white border border-gray-200 rounded-xl p-3 cursor-pointer shadow-sm hover:border-indigo-500 transition flex justify-between items-center";
                 card.onclick = () => selecionarProduto(prod);
 
-                const urlImagem = corrigirLinkImagem(prod.ImagemURL || prod['Imagem URL'] || '');
-
                 card.innerHTML = `
-                    <img src="${urlImagem}" alt="${prod.Nome}" class="w-full h-28 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
-                    <h3 class="font-semibold text-sm text-gray-800">${prod.Nome}</h3>
-                    <p class="text-xs text-gray-500 mt-1 flex-grow">${prod.Descricao || ''}</p>
-                    <p class="text-indigo-600 font-bold text-sm mt-2">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-sm text-gray-800">${prod.Nome}</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">${prod.Descricao || ''}</p>
+                    </div>
+                    <p class="text-indigo-600 font-bold text-sm ml-4 whitespace-nowrap">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
                 `;
                 container.appendChild(card);
             });
