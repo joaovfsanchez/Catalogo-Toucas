@@ -25,9 +25,20 @@
             </div>
         </section>
 
-        <section class="mb-8">
+        <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                Escolha a cor do tecido
+            </h2>
+            <div class="mt-2">
+                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Digite a cor desejada:</label>
+                <input type="text" id="txt-cor-touca" placeholder="Ex: Azul Marinho, Verde, Rosa..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
                 Selecione a Estampa / Desenho
             </h2>
             
@@ -52,7 +63,7 @@
 
         <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">4</span>
                 Personalização & Detalhes
             </h2>
 
@@ -91,7 +102,15 @@
         let produtoSelecionado = null;
         let estampaSelecionada = null;
 
-        // OTIMIZADA: Remove espaços extras e quebras de linha invisíveis (\r)
+        // Converte links normais do GitHub em RAW de forma automática para os Modelos e Estampas
+        function corrigirLinkImagem(url) {
+            if (!url) return "";
+            if (url.includes("github.com") && url.includes("/blob/")) {
+                return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
+            }
+            return url;
+        }
+
         function csvParaObjeto(textoCsv) {
             const linhas = textoCsv.split("\n");
             const cabecalho = linhas[0].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
@@ -99,14 +118,11 @@
 
             for (let i = 1; i < linhas.length; i++) {
                 if (!linhas[i].trim()) continue;
-                
                 const colunas = linhas[i].split(",").map(c => c.trim().replace(/[\r\n]/g, ""));
                 const obj = {};
-                
                 cabecalho.forEach((campo, index) => {
                     obj[campo] = colunas[index] || "";
                 });
-                
                 resultado.push(obj);
             }
             return resultado;
@@ -115,12 +131,10 @@
         async function carregarDados() {
             try {
                 const resProdutos = await fetch(URL_PRODUTOS_CSV);
-                const textoProd = await resProdutos.text();
-                listaProdutos = csvParaObjeto(textoProd);
+                listaProdutos = csvParaObjeto(await resProdutos.text());
 
                 const resEstampas = await fetch(URL_ESTAMPAS_CSV);
-                const textoEst = await resEstampas.text();
-                listaEstampas = csvParaObjeto(textoEst);
+                listaEstampas = csvParaObjeto(await resEstampas.text());
 
                 renderizarProdutos();
                 renderizarEstampas();
@@ -132,12 +146,10 @@
         function renderizarProdutos() {
             const container = document.getElementById("container-produtos");
             container.innerHTML = "";
-
-            // Limpa espaços no filtro de Disponível
             const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.trim().toUpperCase() === "SIM");
 
             if(ativos.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhum modelo disponível no momento.</p>`;
+                container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center">Nenhum modelo disponível.</p>`;
                 return;
             }
 
@@ -147,8 +159,7 @@
                 card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition flex flex-col justify-between";
                 card.onclick = () => selecionarProduto(prod);
 
-                // Garante a leitura da chave ImagemURL independente de pequenos espaços
-                const urlImagem = prod.ImagemURL || prod['Imagem URL'] || '';
+                const urlImagem = corrigirLinkImagem(prod.ImagemURL || prod['Imagem URL'] || '');
 
                 card.innerHTML = `
                     <img src="${urlImagem}" alt="${prod.Nome}" class="w-full h-28 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
@@ -163,7 +174,6 @@
         function renderizarEstampas() {
             const container = document.getElementById("container-estampas");
             container.innerHTML = "";
-
             const ativas = listaEstampas.filter(e => e.Disponivel && e.Disponivel.trim().toUpperCase() === "SIM");
 
             if(ativas.length === 0) {
@@ -178,7 +188,7 @@
                 card.onclick = () => selecionarEstampa(est);
 
                 const nomeEstampa = est['Nome Estampa'] || est.Nome || 'Estampa';
-                const urlImagem = est['Imagem URL'] || est.ImagemURL || '';
+                const urlImagem = corrigirLinkImagem(est['Imagem URL'] || est.ImagemURL || '');
 
                 card.innerHTML = `
                     <img src="${urlImagem}" alt="${nomeEstampa}" class="w-full h-24 object-cover rounded-lg bg-gray-100 mb-2" onerror="this.src='https://placehold.co/150?text=Sem+Foto'">
@@ -193,31 +203,26 @@
             produtoSelecionado = prod;
             listaProdutos.forEach(p => {
                 const el = document.getElementById(`prod-${p.ID}`);
-                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
             });
-            document.getElementById(`prod-${prod.ID}`).classList.add("border-indigo-600", "ring-2", "ring-indigo-100");
+            document.getElementById(`prod-${prod.ID}`).className += " border-indigo-600 ring-2 ring-indigo-100";
         }
-
-        document.addEventListener("DOMContentLoaded", () => {
-             // O código roda após o DOM carregar
-        });
 
         function selecionarEstampa(est) {
             estampaSelecionada = est;
             document.getElementById("radio-logo-propria").checked = false;
-            
             listaEstampas.forEach(e => {
                 const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
             });
-            document.getElementById(`est-${est.Codigo}`).classList.add("border-indigo-600", "ring-2", "ring-indigo-100");
+            document.getElementById(`est-${est.Codigo}`).className += " border-indigo-600 ring-2 ring-indigo-100";
         }
 
         function selecionarOpcaoEstampa() {
             estampaSelecionada = { Codigo: "PROPRIA", "Nome Estampa": "Logomarca Própria (Enviar via Chat)" };
             listaEstampas.forEach(e => {
                 const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.classList.remove("border-indigo-600", "ring-2", "ring-indigo-100");
+                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
             });
         }
 
@@ -230,29 +235,20 @@
 
         function enviarPedido() {
             const nomeCliente = document.getElementById("txt-nome-cliente").value.trim();
+            const corTouca = document.getElementById("txt-cor-touca").value.trim();
             const querNomeBordado = document.getElementById("chk-nome").checked;
             const nomeBordado = document.getElementById("txt-nome-bordado").value.trim();
 
-            if (!produtoSelecionado) {
-                alert("Por favor, selecione um modelo de touca.");
-                return;
-            }
-            if (!estampaSelecionada) {
-                alert("Por favor, selecione uma estampa ou marque a opção de Logo Própria.");
-                return;
-            }
-            if (!nomeCliente) {
-                alert("Por favor, digite seu nome.");
-                return;
-            }
-            if (querNomeBordado && !nomeBordado) {
-                alert("Por favor, informe o nome para o bordado.");
-                return;
-            }
+            if (!produtoSelecionado) { alert("Por favor, selecione um modelo de touca."); return; }
+            if (!corTouca) { alert("Por favor, digite a cor desejada para o tecido."); return; }
+            if (!estampaSelecionada) { alert("Por favor, selecione uma estampa ou marque a opção de Logo Própria."); return; }
+            if (!nomeCliente) { alert("Por favor, digite seu nome."); return; }
+            if (querNomeBordado && !nomeBordado) { alert("Por favor, informe o nome para o bordado."); return; }
 
             let mensagem = `Olá! Gostaria de fazer um pedido de Touca:\n\n`;
             mensagem += `👤 *Cliente:* ${nomeCliente}\n`;
             mensagem += `👒 *Modelo:* ${produtoSelecionado.Nome} (R$ ${parseFloat(produtoSelecionado.Preco || 0).toFixed(2)})\n`;
+            mensagem += `🎨 *Cor do Tecido:* ${corTouca}\n`;
             
             if (estampaSelecionada.Codigo === "PROPRIA") {
                 mensagem += `🎨 *Estampa:* 📸 _[Vou enviar a imagem/logo em seguida para orçamento]_\n`;
