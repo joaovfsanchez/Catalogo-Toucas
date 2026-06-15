@@ -3,48 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Digital - Toucas Cirúrgicas</title>
+    <title>Catálogo Digital - Leondas</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animação de pulsação suave para a logo no Splash Screen */
+        @keyframes pulse-custom {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.03); }
+        }
+        .animate-pulse-custom {
+            animation: pulse-custom 2s infinite ease-in-out;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased minimal-tabs pb-24">
 
-    <header class="bg-indigo-600 text-white text-center py-6 px-4 shadow-md">
-        <h1 class="text-2xl font-bold tracking-tight">Catálogo de Toucas</h1>
-        <p class="text-sm text-indigo-100 mt-1">Escolha seu modelo, estampa e personalize do seu jeito!</p>
+    <div id="splash-screen" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="text-center px-6">
+            <img src="Leondas.jpg" alt="Leondas Logo" class="w-48 h-48 object-contain mx-auto animate-pulse-custom" onerror="this.style.display='none'">
+            <div class="mt-4 flex items-center justify-center gap-2">
+                <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Carregando Catálogo...</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-black text-white text-center py-6 px-4 shadow-md flex flex-col items-center justify-center border-b border-gray-900">
+        <img src="Leondas.jpg" alt="Leondas" class="w-32 h-32 object-contain mb-2">
+        <p class="text-xs text-gray-400 tracking-wide uppercase">Escolha seu modelo, estampa e personalize do seu jeito!</p>
     </header>
 
     <main class="max-w-md mx-auto px-4 mt-6">
         
         <section class="mb-8">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">1</span>
+                <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">1</span>
                 Selecione o Modelo da Touca
             </h2>
             <div id="container-produtos" class="grid grid-cols-1 gap-2">
-                <p class="text-sm text-gray-500 text-center py-4">Carregando modelos...</p>
+                <p class="text-sm text-gray-500 text-center py-4">Buscando modelos...</p>
             </div>
         </section>
 
         <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
                 Escolha a cor do tecido
             </h2>
             <div class="mt-2">
                 <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Digite a cor desejada:</label>
-                <input type="text" id="txt-cor-touca" placeholder="Ex: Azul Marinho, Verde, Rosa..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                <input type="text" id="txt-cor-touca" placeholder="Ex: Azul Marinho, Verde, Rosa..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
         </section>
 
         <section class="mb-8">
             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
                 Selecione a Estampa / Desenho
             </h2>
             
             <div class="mb-4">
-                <label class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-indigo-300 transition">
-                    <input type="radio" name="opcao_estampa" value="PROPRIA" id="radio-logo-propria" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500" onchange="selecionarOpcaoEstampa()">
+                <label class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-gray-400 transition">
+                    <input type="radio" name="opcao_estampa" value="PROPRIA" id="radio-logo-propria" class="w-4 h-4 text-black focus:ring-black" onchange="selecionarOpcaoEstampa()">
                     <div>
                         <p class="font-medium text-sm text-gray-800">Quero enviar minha própria Logomarca</p>
                         <p class="text-xs text-gray-500">O envio da imagem será feito direto no WhatsApp para orçamento.</p>
@@ -57,27 +77,27 @@
             </div>
 
             <div id="container-estampas" class="grid grid-cols-2 gap-3">
-                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Carregando estampas...</p>
+                <p class="text-sm text-gray-500 col-span-2 text-center py-4">Buscando estampas...</p>
             </div>
         </section>
 
         <section class="mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                <span class="bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">4</span>
+                <span class="bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">4</span>
                 Personalização & Detalhes
             </h2>
 
             <div class="mb-4">
                 <label class="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-                    <input type="checkbox" id="chk-nome" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onchange="toggleCampoNome()">
+                    <input type="checkbox" id="chk-nome" class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black" onchange="toggleCampoNome()">
                     Deseja bordar seu nome na touca?
                 </label>
-                <input type="text" id="txt-nome-bordado" placeholder="Ex: Dr. João Vitor" class="hidden w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                <input type="text" id="txt-nome-bordado" placeholder="Ex: Dr. João" class="hidden w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
 
             <div class="mb-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Seu Nome completo:</label>
-                <input type="text" id="txt-nome-cliente" placeholder="Digite seu nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                <input type="text" id="txt-nome-cliente" placeholder="Digite seu nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
         </section>
 
@@ -94,7 +114,7 @@
         const URL_PRODUTOS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=0&single=true&output=csv";
         const URL_ESTAMPAS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7zCbe0IZp3TeRmov3A4m-XvfDqGQn6-BrgmfjipHWtEmSjLPRlz9pRhN2GyJCiguJipYdi4lSCTSm/pub?gid=373604360&single=true&output=csv";
         
-        const SEU_NUMERO_WHATSAPP = "5515988143250"; 
+        const SEU_NUMERO_WHATSAPP = "5515991766675"; 
 
         let listaProdutos = [];
         let listaEstampas = [];
@@ -102,7 +122,6 @@
         let produtoSelecionado = null;
         let estampaSelecionada = null;
 
-        // Converte links normais do GitHub em RAW de forma automática para as Estampas
         function corrigirLinkImagem(url) {
             if (!url) return "";
             if (url.includes("github.com") && url.includes("/blob/")) {
@@ -139,7 +158,14 @@
                 renderizarProdutos();
                 renderizarEstampas();
             } catch (erro) {
-                console.error("Erro ao sincronizar com o Google Sheets:", erro);
+                console.error("Erro ao sincronizar dados:", erro);
+            } finally {
+                // Remove o Splash Screen da tela de forma suave após o carregamento
+                const splash = document.getElementById("splash-screen");
+                if (splash) {
+                    splash.classList.add("opacity-0");
+                    setTimeout(() => splash.remove(), 500);
+                }
             }
         }
 
@@ -149,23 +175,22 @@
             const ativos = listaProdutos.filter(p => p.Disponivel && p.Disponivel.trim().toUpperCase() === "SIM");
 
             if(ativos.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 text-center">Nenhum modelo disponível.</p>`;
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center">Nenhum modelo disponível no momento.</p>`;
                 return;
             }
 
             ativos.forEach(prod => {
                 const card = document.createElement("div");
                 card.id = `prod-${prod.ID}`;
-                // Layout em formato de lista larga (estilo botão de texto)
-                card.className = "bg-white border border-gray-200 rounded-xl p-3 cursor-pointer shadow-sm hover:border-indigo-500 transition flex justify-between items-center";
+                card.className = "bg-white border border-gray-200 rounded-xl p-3.5 cursor-pointer shadow-sm hover:border-black transition flex justify-between items-center";
                 card.onclick = () => selecionarProduto(prod);
 
                 card.innerHTML = `
                     <div class="text-left">
-                        <h3 class="font-semibold text-sm text-gray-800">${prod.Nome}</h3>
+                        <h3 class="font-semibold text-sm text-gray-900">${prod.Nome}</h3>
                         <p class="text-xs text-gray-500 mt-0.5">${prod.Descricao || ''}</p>
                     </div>
-                    <p class="text-indigo-600 font-bold text-sm ml-4 whitespace-nowrap">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
+                    <p class="text-black font-bold text-sm ml-4 whitespace-nowrap">R$ ${parseFloat(prod.Preco || 0).toFixed(2)}</p>
                 `;
                 container.appendChild(card);
             });
@@ -184,7 +209,7 @@
             ativas.forEach(est => {
                 const card = document.createElement("div");
                 card.id = `est-${est.Codigo}`;
-                card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-indigo-500 transition";
+                card.className = "bg-white border border-gray-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-black transition";
                 card.onclick = () => selecionarEstampa(est);
 
                 const nomeEstampa = est['Nome Estampa'] || est.Nome || 'Estampa';
@@ -203,9 +228,9 @@
             produtoSelecionado = prod;
             listaProdutos.forEach(p => {
                 const el = document.getElementById(`prod-${p.ID}`);
-                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
+                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
             });
-            document.getElementById(`prod-${prod.ID}`).className += " border-indigo-600 ring-2 ring-indigo-100";
+            document.getElementById(`prod-${prod.ID}`).className += " border-black ring-2 ring-gray-200";
         }
 
         function selecionarEstampa(est) {
@@ -213,16 +238,16 @@
             document.getElementById("radio-logo-propria").checked = false;
             listaEstampas.forEach(e => {
                 const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
+                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
             });
-            document.getElementById(`est-${est.Codigo}`).className += " border-indigo-600 ring-2 ring-indigo-100";
+            document.getElementById(`est-${est.Codigo}`).className += " border-black ring-2 ring-gray-200";
         }
 
         function selecionarOpcaoEstampa() {
             estampaSelecionada = { Codigo: "PROPRIA", "Nome Estampa": "Logomarca Própria (Enviar via Chat)" };
             listaEstampas.forEach(e => {
                 const el = document.getElementById(`est-${e.Codigo}`);
-                if(el) el.className = el.className.replace(" border-indigo-600 ring-2 ring-indigo-100", "");
+                if(el) el.className = el.className.replace(" border-black ring-2 ring-gray-200", "");
             });
         }
 
